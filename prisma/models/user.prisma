@@ -1,0 +1,36 @@
+// enum UserRole {
+//   ADMIN
+//   USER
+// }
+
+// model User {
+//   id          String   @id @default(uuid())
+//   username    String
+//   email       String   @unique
+//   password    String
+//   avatarUrl   String?
+
+//   role        UserRole @default(USER)
+
+// //   refreshTokens RefreshToken[]
+
+//   createdAt   DateTime @default(now())
+//   updatedAt   DateTime @updatedAt
+// }
+
+enum UserRole {
+    Customer
+    AGENT
+    ADMIN
+}
+
+model User {
+    id        String   @id @default(uuid())
+    fullName String
+    email     String   @unique
+    password  String
+    avatarUrl String?
+    role      UserRole @default(Customer)
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
