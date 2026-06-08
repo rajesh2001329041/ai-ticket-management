@@ -20,6 +20,7 @@ export class AuthController {
     const { refreshToken, ...response } = await this.authService.login(data);
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
+      signed: true,
       secure: true,
       sameSite: 'strict',
       maxAge: 7 * 24 * 60 * 60 * 1000,

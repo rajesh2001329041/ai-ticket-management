@@ -8,12 +8,14 @@ import { UserService } from 'src/user/user.service';
 import bcrypt from 'bcryptjs';
 import { UserLoginDto } from './dtos/user.login.dto';
 import { JwtService } from '@nestjs/jwt';
+import { RedisService } from 'src/redis/redis.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
+    private readonly redisService: RedisService,
   ) {}
 
   async createUser(data: RegisterUserDto) {
@@ -40,7 +42,7 @@ export class AuthService {
       secret: process.env.ACCESS_TOKEN_SECRET,
     });
     // store  refresh  token  in  redis
-
+    await this.redisService.set(`refresh:${response.id}`, refreshToken, 604800);
     return {
       accessToken,
       refreshToken,
